@@ -1,16 +1,9 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About Me",
-    "section": "",
-    "text": "About me…"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "website",
+    "title": "The Repository",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "Hi! I am a senior pursuing a B.S. in Computer Science at Hope College. A quick learner, detail-oriented, and a problem-solver at heart, I am especially interested in Data Analytics and I am actively seeking opportunities related to the same.\nTake a look around my projects… maybe you will find something of interest!"
   }
 ]
