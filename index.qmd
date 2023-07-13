@@ -1,11 +1,7 @@
 ---
-title: "website"
+title: "The Repository"
 ---
 
-This is a Quarto website.
+Hi! I am a senior pursuing a B.S. in Computer Science at Hope College. A quick learner, detail-oriented, and a problem-solver at heart, I am especially interested in Data Analytics and I am actively seeking opportunities related to the same.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{r}
-1 + 1
-```
+Take a look around my projects... maybe you will find something of interest!
