@@ -8,7 +8,8 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
-      - resume/kring-resume.html
+      - href: resume/kring-resume.html
+        text: Resume
 
 format:
   html:
