@@ -7,6 +7,9 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - menu:
+        - href: erie.qmd
+          text: Lake Erie Analysis
       - href: resume/kring-resume.html
         text: Resume
 
