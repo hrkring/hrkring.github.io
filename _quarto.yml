@@ -11,13 +11,24 @@ website:
         menu:
         - href: erie.qmd
           text: Lake Erie Analysis
-        - text: gtthemes
+        - href: tableclothr.qmd
+          text: tableclothr
       - href: resume/kring-resume.html
         text: Resume
+  page-footer:
+    center: |
+      [Contact Me](mailto:hrishonkring@gmail.com)
+    left: |
+      Made with [Quarto](https://quarto.org/)
+    right: |
+      [Github Code Repo](https://github.com/hrkring)
+    background: "#404040"
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: flatly
+      dark: darkly
     css: styles.css
     toc: true
 

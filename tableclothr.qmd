@@ -1,0 +1,15 @@
+---
+title: "tableclothr"
+date: 2023-07-13
+author: Haniah Kring 
+categories: [package, tables, theming]
+---
+  
+# What is tableclothr?
+
+tableclothr is a package which allows you to easily transform your data into static or dynamic tables. The original version was drafted by [Josiah Ringelberg](https://jringelb.github.io), and I have since grown it into a full fletched package.
+
+
+## The Core Functionality
+
+More details coming soon...

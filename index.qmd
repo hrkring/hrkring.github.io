@@ -1,5 +1,15 @@
 ---
-title: "The Repository"
+title: "Haniah Kring"
+image: images/cover.jpg
+about: 
+  template: trestles
+  links:
+    - text: LinkedIn
+      href: https://www.linkedin.com/in/hrkring/
+    - text: GitHub
+      href: https://github.com/hrkring
+    - text: Email
+      href: mailto:hrishonkring@gmail.com
 ---
 
 Hi! I am a senior pursuing a B.S. in Computer Science at Hope College. A quick learner, detail-oriented, and a problem-solver at heart, I am especially interested in Data Analytics and I am actively seeking opportunities related to the same.
