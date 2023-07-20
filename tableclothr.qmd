@@ -10,6 +10,35 @@ categories: [package, tables, theming]
 tableclothr is a package which allows you to easily transform your data into static or dynamic tables. The original version was drafted by [Josiah Ringelberg](https://jringelb.github.io), and I have since grown it into a full fletched package.
 
 
-## The Core Functionality
+## Core Functionality
 
-More details coming soon...
+tableclothr integrates two of the most popular table creation packages together: gt and DT.
+
+1. gt follows in the footsteps of ggplot2, aiming to be a powerful, yet straightforward way of creating beatiful tables in R
+2. DT is an R interface for the JavaScript library, DataTables. It's power comes from the ability to create html tables that allow you to interactively filter, sort, and search your data
+
+tableclothr has one primary function: `tablecloth()`.
+
+In gt format:
+
+```{r}
+#| layout-nrow: 2
+library(tableclothr)
+library(gt)
+
+tablecloth(gtcars,
+           title = 'Cars Summary',
+           group_col = 'year',
+           rowname_col = 'mfr',
+           aggregate_by = 'median',
+           format = 'static',
+           theme = 'greyscale')
+
+```
+In DT format:
+
+```{r}
+
+library(DT)
+
+```
