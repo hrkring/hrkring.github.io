@@ -9,7 +9,7 @@
 <meta name="author" content="Haniah Kring">
 <meta name="dcterms.date" content="2023-07-13">
 
-<title>The Repository - tableclothr</title>
+<title>Haniah Kring - tableclothr</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -77,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">The Repository</span>
+    <span class="navbar-title">Haniah Kring</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -128,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#what-is-tableclothr" id="toc-what-is-tableclothr" class="nav-link active" data-scroll-target="#what-is-tableclothr">What is tableclothr?</a>
   <ul class="collapse">
-  <li><a href="#the-core-functionality" id="toc-the-core-functionality" class="nav-link" data-scroll-target="#the-core-functionality">The Core Functionality</a></li>
+  <li><a href="#core-functionality" id="toc-core-functionality" class="nav-link" data-scroll-target="#core-functionality">Core Functionality</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -173,9 +207,721 @@ ul.task-list li input[type="checkbox"] {
 <section id="what-is-tableclothr" class="level1">
 <h1>What is tableclothr?</h1>
 <p>tableclothr is a package which allows you to easily transform your data into static or dynamic tables. The original version was drafted by <a href="https://jringelb.github.io">Josiah Ringelberg</a>, and I have since grown it into a full fletched package.</p>
-<section id="the-core-functionality" class="level2">
-<h2 class="anchored" data-anchor-id="the-core-functionality">The Core Functionality</h2>
-<p>More details coming soon…</p>
+<section id="core-functionality" class="level2">
+<h2 class="anchored" data-anchor-id="core-functionality">Core Functionality</h2>
+<p>tableclothr integrates two of the most popular table creation packages together: gt and DT.</p>
+<ol type="1">
+<li>gt follows in the footsteps of ggplot2, aiming to be a powerful, yet straightforward way of creating beatiful tables in R</li>
+<li>DT is an R interface for the JavaScript library, DataTables. It’s power comes from the ability to create html tables that allow you to interactively filter, sort, and search your data</li>
+</ol>
+<p>tableclothr has one primary function: <code>tablecloth()</code>.</p>
+<p>In gt format:</p>
+<div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tableclothr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tablecloth</span>(gtcars,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">title =</span> <span class="st">'Cars Summary'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">group_col =</span> <span class="st">'year'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">rowname_col =</span> <span class="st">'mfr'</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">aggregate_by =</span> <span class="st">'median'</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">format =</span> <span class="st">'static'</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">theme =</span> <span class="st">'greyscale'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+
+<div id="glqptyeqqc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:hidden;overflow-y:auto;width:auto;height:auto;">
+<style>#glqptyeqqc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#glqptyeqqc thead, #glqptyeqqc tbody, #glqptyeqqc tfoot, #glqptyeqqc tr, #glqptyeqqc td, #glqptyeqqc th {
+  border-style: none;
+}
+
+#glqptyeqqc p {
+  margin: 0;
+  padding: 0;
+}
+
+#glqptyeqqc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  border-left-style: solid;
+  border-left-width: 2px;
+  border-left-color: #000000;
+}
+
+#glqptyeqqc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#glqptyeqqc .gt_title {
+  color: #FFFFFF;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#glqptyeqqc .gt_subtitle {
+  color: #FFFFFF;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#glqptyeqqc .gt_heading {
+  background-color: #B1B1B1;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#glqptyeqqc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+}
+
+#glqptyeqqc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#glqptyeqqc .gt_col_heading {
+  color: #FFFFFF;
+  background-color: #B1B1B1;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#glqptyeqqc .gt_column_spanner_outer {
+  color: #FFFFFF;
+  background-color: #B1B1B1;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#glqptyeqqc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#glqptyeqqc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#glqptyeqqc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#glqptyeqqc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#glqptyeqqc .gt_group_heading {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #000000;
+  background-color: #ECECEC;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#glqptyeqqc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #ECECEC;
+  font-size: 100%;
+  font-weight: bold;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  vertical-align: middle;
+}
+
+#glqptyeqqc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#glqptyeqqc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#glqptyeqqc .gt_row {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#glqptyeqqc .gt_stub {
+  color: #000000;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#glqptyeqqc .gt_stub_row_group {
+  color: #000000;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#glqptyeqqc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#glqptyeqqc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#glqptyeqqc .gt_summary_row {
+  color: #000000;
+  background-color: #ECECEC;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#glqptyeqqc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #808080;
+}
+
+#glqptyeqqc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#glqptyeqqc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #808080;
+}
+
+#glqptyeqqc .gt_grand_summary_row {
+  color: #000000;
+  background-color: #ECECEC;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#glqptyeqqc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #000000;
+}
+
+#glqptyeqqc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #000000;
+}
+
+#glqptyeqqc .gt_striped {
+  background-color: #FFFFFF;
+}
+
+#glqptyeqqc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+}
+
+#glqptyeqqc .gt_footnotes {
+  color: #000000;
+  background-color: #ECECEC;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#glqptyeqqc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#glqptyeqqc .gt_sourcenotes {
+  color: #000000;
+  background-color: #ECECEC;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#glqptyeqqc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#glqptyeqqc .gt_left {
+  text-align: left;
+}
+
+#glqptyeqqc .gt_center {
+  text-align: center;
+}
+
+#glqptyeqqc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#glqptyeqqc .gt_font_normal {
+  font-weight: normal;
+}
+
+#glqptyeqqc .gt_font_bold {
+  font-weight: bold;
+}
+
+#glqptyeqqc .gt_font_italic {
+  font-style: italic;
+}
+
+#glqptyeqqc .gt_super {
+  font-size: 65%;
+}
+
+#glqptyeqqc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#glqptyeqqc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#glqptyeqqc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#glqptyeqqc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#glqptyeqqc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#glqptyeqqc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#glqptyeqqc .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="8" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="color: #000000;">Cars Summary</td>
+    </tr>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=""></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #000000;" scope="col" id="hp">hp</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #000000;" scope="col" id="hp_rpm">hp_rpm</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #000000;" scope="col" id="trq">trq</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #000000;" scope="col" id="trq_rpm">trq_rpm</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #000000;" scope="col" id="mpg_c">mpg_c</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #000000;" scope="col" id="mpg_h">mpg_h</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="color: #000000;" scope="col" id="msrp">msrp</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <th colspan="8" class="gt_group_heading" scope="colgroup" id="2014">2014</th>
+    </tr>
+    <tr class="gt_row_group_first"><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">Ferrari</th>
+<td headers="2014 stub_1_1 hp" class="gt_row gt_right">562.00</td>
+<td headers="2014 stub_1_1 hp_rpm" class="gt_row gt_right">9,000.00</td>
+<td headers="2014 stub_1_1 trq" class="gt_row gt_right">398.00</td>
+<td headers="2014 stub_1_1 trq_rpm" class="gt_row gt_right">6,000.00</td>
+<td headers="2014 stub_1_1 mpg_c" class="gt_row gt_right">13.00</td>
+<td headers="2014 stub_1_1 mpg_h" class="gt_row gt_right">17.00</td>
+<td headers="2014 stub_1_1 msrp" class="gt_row gt_right">233,509.00</td></tr>
+    <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">Lamborghini</th>
+<td headers="2014 stub_1_2 hp" class="gt_row gt_right">550.00</td>
+<td headers="2014 stub_1_2 hp_rpm" class="gt_row gt_right">8,000.00</td>
+<td headers="2014 stub_1_2 trq" class="gt_row gt_right">398.00</td>
+<td headers="2014 stub_1_2 trq_rpm" class="gt_row gt_right">6,500.00</td>
+<td headers="2014 stub_1_2 mpg_c" class="gt_row gt_right">12.00</td>
+<td headers="2014 stub_1_2 mpg_h" class="gt_row gt_right">20.00</td>
+<td headers="2014 stub_1_2 msrp" class="gt_row gt_right">191,900.00</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="8" class="gt_group_heading" scope="colgroup" id="2015">2015</th>
+    </tr>
+    <tr class="gt_row_group_first"><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">Audi</th>
+<td headers="2015 stub_1_3 hp" class="gt_row gt_right">430.00</td>
+<td headers="2015 stub_1_3 hp_rpm" class="gt_row gt_right">7,900.00</td>
+<td headers="2015 stub_1_3 trq" class="gt_row gt_right">317.00</td>
+<td headers="2015 stub_1_3 trq_rpm" class="gt_row gt_right">4,500.00</td>
+<td headers="2015 stub_1_3 mpg_c" class="gt_row gt_right">11.00</td>
+<td headers="2015 stub_1_3 mpg_h" class="gt_row gt_right">20.00</td>
+<td headers="2015 stub_1_3 msrp" class="gt_row gt_right">115,900.00</td></tr>
+    <tr><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">Ferrari</th>
+<td headers="2015 stub_1_4 hp" class="gt_row gt_right">624.50</td>
+<td headers="2015 stub_1_4 hp_rpm" class="gt_row gt_right">8,625.00</td>
+<td headers="2015 stub_1_4 trq" class="gt_row gt_right">506.50</td>
+<td headers="2015 stub_1_4 trq_rpm" class="gt_row gt_right">6,000.00</td>
+<td headers="2015 stub_1_4 mpg_c" class="gt_row gt_right">12.50</td>
+<td headers="2015 stub_1_4 mpg_h" class="gt_row gt_right">16.50</td>
+<td headers="2015 stub_1_4 msrp" class="gt_row gt_right">293,372.00</td></tr>
+    <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">Lamborghini</th>
+<td headers="2015 stub_1_5 hp" class="gt_row gt_right">655.00</td>
+<td headers="2015 stub_1_5 hp_rpm" class="gt_row gt_right">8,250.00</td>
+<td headers="2015 stub_1_5 trq" class="gt_row gt_right">460.00</td>
+<td headers="2015 stub_1_5 trq_rpm" class="gt_row gt_right">6,000.00</td>
+<td headers="2015 stub_1_5 mpg_c" class="gt_row gt_right">13.50</td>
+<td headers="2015 stub_1_5 mpg_h" class="gt_row gt_right">19.00</td>
+<td headers="2015 stub_1_5 msrp" class="gt_row gt_right">317,375.00</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="8" class="gt_group_heading" scope="colgroup" id="2016">2016</th>
+    </tr>
+    <tr class="gt_row_group_first"><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">Aston Martin</th>
+<td headers="2016 stub_1_6 hp" class="gt_row gt_right">552.00</td>
+<td headers="2016 stub_1_6 hp_rpm" class="gt_row gt_right">6,650.00</td>
+<td headers="2016 stub_1_6 trq" class="gt_row gt_right">465.00</td>
+<td headers="2016 stub_1_6 trq_rpm" class="gt_row gt_right">5,500.00</td>
+<td headers="2016 stub_1_6 mpg_c" class="gt_row gt_right">13.00</td>
+<td headers="2016 stub_1_6 mpg_h" class="gt_row gt_right">21.00</td>
+<td headers="2016 stub_1_6 msrp" class="gt_row gt_right">205,300.00</td></tr>
+    <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub">Audi</th>
+<td headers="2016 stub_1_7 hp" class="gt_row gt_right">485.00</td>
+<td headers="2016 stub_1_7 hp_rpm" class="gt_row gt_right">5,800.00</td>
+<td headers="2016 stub_1_7 trq" class="gt_row gt_right">443.50</td>
+<td headers="2016 stub_1_7 trq_rpm" class="gt_row gt_right">1,550.00</td>
+<td headers="2016 stub_1_7 mpg_c" class="gt_row gt_right">16.00</td>
+<td headers="2016 stub_1_7 mpg_h" class="gt_row gt_right">26.00</td>
+<td headers="2016 stub_1_7 msrp" class="gt_row gt_right">95,900.00</td></tr>
+    <tr><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub">BMW</th>
+<td headers="2016 stub_1_8 hp" class="gt_row gt_right">425.00</td>
+<td headers="2016 stub_1_8 hp_rpm" class="gt_row gt_right">5,800.00</td>
+<td headers="2016 stub_1_8 trq" class="gt_row gt_right">420.00</td>
+<td headers="2016 stub_1_8 trq_rpm" class="gt_row gt_right">1,500.00</td>
+<td headers="2016 stub_1_8 mpg_c" class="gt_row gt_right">17.00</td>
+<td headers="2016 stub_1_8 mpg_h" class="gt_row gt_right">24.00</td>
+<td headers="2016 stub_1_8 msrp" class="gt_row gt_right">94,100.00</td></tr>
+    <tr><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub">Bentley</th>
+<td headers="2016 stub_1_9 hp" class="gt_row gt_right">500.00</td>
+<td headers="2016 stub_1_9 hp_rpm" class="gt_row gt_right">6,000.00</td>
+<td headers="2016 stub_1_9 trq" class="gt_row gt_right">487.00</td>
+<td headers="2016 stub_1_9 trq_rpm" class="gt_row gt_right">1,700.00</td>
+<td headers="2016 stub_1_9 mpg_c" class="gt_row gt_right">15.00</td>
+<td headers="2016 stub_1_9 mpg_h" class="gt_row gt_right">25.00</td>
+<td headers="2016 stub_1_9 msrp" class="gt_row gt_right">198,500.00</td></tr>
+    <tr><th id="stub_1_10" scope="row" class="gt_row gt_left gt_stub">Chevrolet</th>
+<td headers="2016 stub_1_10 hp" class="gt_row gt_right">650.00</td>
+<td headers="2016 stub_1_10 hp_rpm" class="gt_row gt_right">6,400.00</td>
+<td headers="2016 stub_1_10 trq" class="gt_row gt_right">650.00</td>
+<td headers="2016 stub_1_10 trq_rpm" class="gt_row gt_right">3,600.00</td>
+<td headers="2016 stub_1_10 mpg_c" class="gt_row gt_right">15.00</td>
+<td headers="2016 stub_1_10 mpg_h" class="gt_row gt_right">22.00</td>
+<td headers="2016 stub_1_10 msrp" class="gt_row gt_right">88,345.00</td></tr>
+    <tr><th id="stub_1_11" scope="row" class="gt_row gt_left gt_stub">Ferrari</th>
+<td headers="2016 stub_1_11 hp" class="gt_row gt_right">661.00</td>
+<td headers="2016 stub_1_11 hp_rpm" class="gt_row gt_right">8,000.00</td>
+<td headers="2016 stub_1_11 trq" class="gt_row gt_right">561.00</td>
+<td headers="2016 stub_1_11 trq_rpm" class="gt_row gt_right">3,000.00</td>
+<td headers="2016 stub_1_11 mpg_c" class="gt_row gt_right">15.00</td>
+<td headers="2016 stub_1_11 mpg_h" class="gt_row gt_right">22.00</td>
+<td headers="2016 stub_1_11 msrp" class="gt_row gt_right">245,400.00</td></tr>
+    <tr><th id="stub_1_12" scope="row" class="gt_row gt_left gt_stub">Jaguar</th>
+<td headers="2016 stub_1_12 hp" class="gt_row gt_right">340.00</td>
+<td headers="2016 stub_1_12 hp_rpm" class="gt_row gt_right">6,500.00</td>
+<td headers="2016 stub_1_12 trq" class="gt_row gt_right">332.00</td>
+<td headers="2016 stub_1_12 trq_rpm" class="gt_row gt_right">3,500.00</td>
+<td headers="2016 stub_1_12 mpg_c" class="gt_row gt_right">16.00</td>
+<td headers="2016 stub_1_12 mpg_h" class="gt_row gt_right">24.00</td>
+<td headers="2016 stub_1_12 msrp" class="gt_row gt_right">65,000.00</td></tr>
+    <tr><th id="stub_1_13" scope="row" class="gt_row gt_left gt_stub">Maserati</th>
+<td headers="2016 stub_1_13 hp" class="gt_row gt_right">404.00</td>
+<td headers="2016 stub_1_13 hp_rpm" class="gt_row gt_right">5,500.00</td>
+<td headers="2016 stub_1_13 trq" class="gt_row gt_right">384.00</td>
+<td headers="2016 stub_1_13 trq_rpm" class="gt_row gt_right">1,750.00</td>
+<td headers="2016 stub_1_13 mpg_c" class="gt_row gt_right">16.00</td>
+<td headers="2016 stub_1_13 mpg_h" class="gt_row gt_right">23.00</td>
+<td headers="2016 stub_1_13 msrp" class="gt_row gt_right">99,900.00</td></tr>
+    <tr><th id="stub_1_14" scope="row" class="gt_row gt_left gt_stub">McLaren</th>
+<td headers="2016 stub_1_14 hp" class="gt_row gt_right">570.00</td>
+<td headers="2016 stub_1_14 hp_rpm" class="gt_row gt_right">7,500.00</td>
+<td headers="2016 stub_1_14 trq" class="gt_row gt_right">443.00</td>
+<td headers="2016 stub_1_14 trq_rpm" class="gt_row gt_right">5,000.00</td>
+<td headers="2016 stub_1_14 mpg_c" class="gt_row gt_right">16.00</td>
+<td headers="2016 stub_1_14 mpg_h" class="gt_row gt_right">23.00</td>
+<td headers="2016 stub_1_14 msrp" class="gt_row gt_right">184,900.00</td></tr>
+    <tr><th id="stub_1_15" scope="row" class="gt_row gt_left gt_stub">Mercedes-Benz</th>
+<td headers="2016 stub_1_15 hp" class="gt_row gt_right">416.00</td>
+<td headers="2016 stub_1_15 hp_rpm" class="gt_row gt_right">5,750.00</td>
+<td headers="2016 stub_1_15 trq" class="gt_row gt_right">416.50</td>
+<td headers="2016 stub_1_15 trq_rpm" class="gt_row gt_right">1,675.00</td>
+<td headers="2016 stub_1_15 mpg_c" class="gt_row gt_right">18.00</td>
+<td headers="2016 stub_1_15 mpg_h" class="gt_row gt_right">24.50</td>
+<td headers="2016 stub_1_15 msrp" class="gt_row gt_right">107,475.00</td></tr>
+    <tr><th id="stub_1_16" scope="row" class="gt_row gt_left gt_stub">Nissan</th>
+<td headers="2016 stub_1_16 hp" class="gt_row gt_right">545.00</td>
+<td headers="2016 stub_1_16 hp_rpm" class="gt_row gt_right">6,400.00</td>
+<td headers="2016 stub_1_16 trq" class="gt_row gt_right">436.00</td>
+<td headers="2016 stub_1_16 trq_rpm" class="gt_row gt_right">3,200.00</td>
+<td headers="2016 stub_1_16 mpg_c" class="gt_row gt_right">16.00</td>
+<td headers="2016 stub_1_16 mpg_h" class="gt_row gt_right">22.00</td>
+<td headers="2016 stub_1_16 msrp" class="gt_row gt_right">101,770.00</td></tr>
+    <tr><th id="stub_1_17" scope="row" class="gt_row gt_left gt_stub">Porsche</th>
+<td headers="2016 stub_1_17 hp" class="gt_row gt_right">330.00</td>
+<td headers="2016 stub_1_17 hp_rpm" class="gt_row gt_right">6,800.00</td>
+<td headers="2016 stub_1_17 trq" class="gt_row gt_right">291.00</td>
+<td headers="2016 stub_1_17 trq_rpm" class="gt_row gt_right">4,675.00</td>
+<td headers="2016 stub_1_17 mpg_c" class="gt_row gt_right">19.00</td>
+<td headers="2016 stub_1_17 mpg_h" class="gt_row gt_right">28.00</td>
+<td headers="2016 stub_1_17 msrp" class="gt_row gt_right">81,200.00</td></tr>
+    <tr><th id="stub_1_18" scope="row" class="gt_row gt_left gt_stub">Rolls-Royce</th>
+<td headers="2016 stub_1_18 hp" class="gt_row gt_right">593.50</td>
+<td headers="2016 stub_1_18 hp_rpm" class="gt_row gt_right">5,425.00</td>
+<td headers="2016 stub_1_18 trq" class="gt_row gt_right">582.50</td>
+<td headers="2016 stub_1_18 trq_rpm" class="gt_row gt_right">1,500.00</td>
+<td headers="2016 stub_1_18 mpg_c" class="gt_row gt_right">12.50</td>
+<td headers="2016 stub_1_18 mpg_h" class="gt_row gt_right">20.00</td>
+<td headers="2016 stub_1_18 msrp" class="gt_row gt_right">319,675.00</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="8" class="gt_group_heading" scope="colgroup" id="2017">2017</th>
+    </tr>
+    <tr class="gt_row_group_first"><th id="stub_1_19" scope="row" class="gt_row gt_left gt_stub">Acura</th>
+<td headers="2017 stub_1_19 hp" class="gt_row gt_right">573.00</td>
+<td headers="2017 stub_1_19 hp_rpm" class="gt_row gt_right">6,500.00</td>
+<td headers="2017 stub_1_19 trq" class="gt_row gt_right">476.00</td>
+<td headers="2017 stub_1_19 trq_rpm" class="gt_row gt_right">2,000.00</td>
+<td headers="2017 stub_1_19 mpg_c" class="gt_row gt_right">21.00</td>
+<td headers="2017 stub_1_19 mpg_h" class="gt_row gt_right">22.00</td>
+<td headers="2017 stub_1_19 msrp" class="gt_row gt_right">156,000.00</td></tr>
+    <tr><th id="stub_1_20" scope="row" class="gt_row gt_left gt_stub">Aston Martin</th>
+<td headers="2017 stub_1_20 hp" class="gt_row gt_right">608.00</td>
+<td headers="2017 stub_1_20 hp_rpm" class="gt_row gt_right">6,500.00</td>
+<td headers="2017 stub_1_20 trq" class="gt_row gt_right">516.00</td>
+<td headers="2017 stub_1_20 trq_rpm" class="gt_row gt_right">1,500.00</td>
+<td headers="2017 stub_1_20 mpg_c" class="gt_row gt_right">15.00</td>
+<td headers="2017 stub_1_20 mpg_h" class="gt_row gt_right">21.00</td>
+<td headers="2017 stub_1_20 msrp" class="gt_row gt_right">211,195.00</td></tr>
+    <tr><th id="stub_1_21" scope="row" class="gt_row gt_left gt_stub">Dodge</th>
+<td headers="2017 stub_1_21 hp" class="gt_row gt_right">645.00</td>
+<td headers="2017 stub_1_21 hp_rpm" class="gt_row gt_right">5,000.00</td>
+<td headers="2017 stub_1_21 trq" class="gt_row gt_right">600.00</td>
+<td headers="2017 stub_1_21 trq_rpm" class="gt_row gt_right">5,000.00</td>
+<td headers="2017 stub_1_21 mpg_c" class="gt_row gt_right">12.00</td>
+<td headers="2017 stub_1_21 mpg_h" class="gt_row gt_right">19.00</td>
+<td headers="2017 stub_1_21 msrp" class="gt_row gt_right">95,895.00</td></tr>
+    <tr><th id="stub_1_22" scope="row" class="gt_row gt_left gt_stub">Ferrari</th>
+<td headers="2017 stub_1_22 hp" class="gt_row gt_right">680.00</td>
+<td headers="2017 stub_1_22 hp_rpm" class="gt_row gt_right">8,250.00</td>
+<td headers="2017 stub_1_22 trq" class="gt_row gt_right">514.00</td>
+<td headers="2017 stub_1_22 trq_rpm" class="gt_row gt_right">5,750.00</td>
+<td headers="2017 stub_1_22 mpg_c" class="gt_row gt_right">12.00</td>
+<td headers="2017 stub_1_22 mpg_h" class="gt_row gt_right">17.00</td>
+<td headers="2017 stub_1_22 msrp" class="gt_row gt_right">298,000.00</td></tr>
+    <tr><th id="stub_1_23" scope="row" class="gt_row gt_left gt_stub">Ford</th>
+<td headers="2017 stub_1_23 hp" class="gt_row gt_right">647.00</td>
+<td headers="2017 stub_1_23 hp_rpm" class="gt_row gt_right">6,250.00</td>
+<td headers="2017 stub_1_23 trq" class="gt_row gt_right">550.00</td>
+<td headers="2017 stub_1_23 trq_rpm" class="gt_row gt_right">5,900.00</td>
+<td headers="2017 stub_1_23 mpg_c" class="gt_row gt_right">11.00</td>
+<td headers="2017 stub_1_23 mpg_h" class="gt_row gt_right">18.00</td>
+<td headers="2017 stub_1_23 msrp" class="gt_row gt_right">447,000.00</td></tr>
+    <tr><th id="stub_1_24" scope="row" class="gt_row gt_left gt_stub">Lotus</th>
+<td headers="2017 stub_1_24 hp" class="gt_row gt_right">400.00</td>
+<td headers="2017 stub_1_24 hp_rpm" class="gt_row gt_right">7,000.00</td>
+<td headers="2017 stub_1_24 trq" class="gt_row gt_right">302.00</td>
+<td headers="2017 stub_1_24 trq_rpm" class="gt_row gt_right">3,500.00</td>
+<td headers="2017 stub_1_24 mpg_c" class="gt_row gt_right">16.00</td>
+<td headers="2017 stub_1_24 mpg_h" class="gt_row gt_right">24.00</td>
+<td headers="2017 stub_1_24 msrp" class="gt_row gt_right">91,900.00</td></tr>
+    <tr><th id="stub_1_25" scope="row" class="gt_row gt_left gt_stub">Porsche</th>
+<td headers="2017 stub_1_25 hp" class="gt_row gt_right">300.00</td>
+<td headers="2017 stub_1_25 hp_rpm" class="gt_row gt_right">6,500.00</td>
+<td headers="2017 stub_1_25 trq" class="gt_row gt_right">280.00</td>
+<td headers="2017 stub_1_25 trq_rpm" class="gt_row gt_right">1,950.00</td>
+<td headers="2017 stub_1_25 mpg_c" class="gt_row gt_right">20.50</td>
+<td headers="2017 stub_1_25 mpg_h" class="gt_row gt_right">28.50</td>
+<td headers="2017 stub_1_25 msrp" class="gt_row gt_right">54,950.00</td></tr>
+    <tr><th id="stub_1_26" scope="row" class="gt_row gt_left gt_stub">Tesla</th>
+<td headers="2017 stub_1_26 hp" class="gt_row gt_right">259.00</td>
+<td headers="2017 stub_1_26 hp_rpm" class="gt_row gt_right">6,100.00</td>
+<td headers="2017 stub_1_26 trq" class="gt_row gt_right">243.00</td>
+<td headers="2017 stub_1_26 trq_rpm" class="gt_row gt_right">NA</td>
+<td headers="2017 stub_1_26 mpg_c" class="gt_row gt_right">NA</td>
+<td headers="2017 stub_1_26 mpg_h" class="gt_row gt_right">NA</td>
+<td headers="2017 stub_1_26 msrp" class="gt_row gt_right">74,500.00</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>In DT format:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
