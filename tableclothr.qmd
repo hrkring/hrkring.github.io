@@ -3,11 +3,12 @@ title: "tableclothr"
 date: 2023-07-13
 author: Haniah Kring 
 categories: [package, tables, theming]
+code-fold: true
 ---
   
 # What is tableclothr?
 
-tableclothr is a package which allows you to easily transform your data into static or dynamic tables. The original version was drafted by [Josiah Ringelberg](https://jringelb.github.io), and I have since grown it into a full fletched package.
+[tableclothr](https://github.com/hrkring/tableclothr) is a package which offers a set of flexible wrappers and supporting functions for the creation and manipulation of gt and DT tables. The original version was drafted by [Josiah Ringelberg](https://jringelb.github.io), and I have since grown it into a full fletched package.
 
 
 ## Core Functionality
@@ -22,11 +23,13 @@ tableclothr has one primary function: `tablecloth()`.
 In gt format:
 
 ```{r}
-#| layout-nrow: 2
+#| label: The tablecloth function
+#| message: false
+library(dplyr)
 library(tableclothr)
 library(gt)
 
-tablecloth(gtcars,
+gtcars_table <- tablecloth(gtcars,
            title = 'Cars Summary',
            group_col = 'year',
            rowname_col = 'mfr',
@@ -34,11 +37,35 @@ tablecloth(gtcars,
            format = 'static',
            theme = 'greyscale')
 
+gtcars_table
+
 ```
+
+You can add color coding using either the default thresholds, or add your own:
+
+```{r}
+#| layout-ncol: 2
+
+## Use the default thresholds
+add_color_code(gtcars_table, col = "hp")
+
+## Or specify the thresholds yourself
+add_color_code(gtcars_table, col = "hp", thresholds = c(400, 600))
+
+```
+
 In DT format:
 
 ```{r}
-
 library(DT)
+
+gtcars_table <- tablecloth(gtcars,
+           title = 'Cars Dataset',
+           group_col = 'year',
+           rowname_col = 'mfr',
+           format = 'dynamic',
+           theme = 'greyscale')
+
+gtcars_table
 
 ```
