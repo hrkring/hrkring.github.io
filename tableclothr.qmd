@@ -5,7 +5,18 @@ author: Haniah Kring
 categories: [package, tables, theming]
 code-fold: true
 ---
-  
+
+```{r}
+#| label: Setup
+#| include: false
+
+library(DT)
+library(dplyr)
+library(tableclothr)
+library(gt)
+
+```
+
 # What is tableclothr?
 
 [tableclothr](https://github.com/hrkring/tableclothr) is a package which offers a set of flexible wrappers and supporting functions for the creation and manipulation of gt and DT tables. The original version was drafted by [Josiah Ringelberg](https://jringelb.github.io), and I have since grown it into a full fletched package.
@@ -20,14 +31,13 @@ tableclothr integrates two of the most popular table creation packages together:
 
 tableclothr has one primary function: `tablecloth()`.
 
+## Table Format
+
 In gt format:
 
 ```{r}
-#| label: The tablecloth function
+#| label: Static Table
 #| message: false
-library(dplyr)
-library(tableclothr)
-library(gt)
 
 gtcars_table <- tablecloth(gtcars,
            title = 'Cars Summary',
@@ -41,9 +51,28 @@ gtcars_table
 
 ```
 
-You can add color coding using either the default thresholds, or add your own:
+In DT format:
 
 ```{r}
+#| label: Dynamic Table
+
+gtcars_dynamic <- tablecloth(gtcars,
+           title = 'Cars Dataset',
+           group_col = 'mfr',
+           rowname_col = 'year',
+           format = 'dynamic',
+           theme = 'greyscale')
+
+gtcars_dynamic
+
+```
+
+## Color Coding
+
+Add color coding using either the default thresholds, or add your own:
+
+```{r}
+#| label: Color Coding
 #| layout-ncol: 2
 
 ## Use the default thresholds
@@ -54,18 +83,19 @@ add_color_code(gtcars_table, col = "hp", thresholds = c(400, 600))
 
 ```
 
-In DT format:
+## Theming
+
+Change the theme quickly and easily:
 
 ```{r}
-library(DT)
+#| label: Theming
 
-gtcars_table <- tablecloth(gtcars,
-           title = 'Cars Dataset',
+tablecloth(gtcars,
+           title = 'Cars Summary',
            group_col = 'year',
            rowname_col = 'mfr',
-           format = 'dynamic',
-           theme = 'greyscale')
-
-gtcars_table
+           aggregate_by = 'median',
+           format = 'static',
+           theme = 'greenscale')
 
 ```

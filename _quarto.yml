@@ -21,7 +21,7 @@ website:
     left: |
       Made with [Quarto](https://quarto.org/)
     right: |
-      [Github Code Repo](https://github.com/hrkring)
+      [Github Code Repo](https://github.com/hrkring/hrkring.github.io)
     background: "#404040"
 
 format:
