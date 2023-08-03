@@ -1,1 +1,1 @@
-Sitemap: https://github.com/hrkring/hrkring.github.io/sitemap.xml
+Sitemap: https://hrkring.github.io/sitemap.xml
