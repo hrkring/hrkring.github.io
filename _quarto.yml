@@ -9,6 +9,8 @@ website:
         text: Home
       - text: Projects
         menu:
+        - href: silmarillion-characters.qmd
+          text: Visualizing Book Characters
         - href: erie.qmd
           text: Lake Erie Analysis
         - href: tableclothr.qmd

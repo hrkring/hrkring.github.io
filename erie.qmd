@@ -37,9 +37,9 @@ library(purrr)
 library(vegan)
 library(ape)
 
-erie <- readRDS("erie_data/erie.rds")
-erie_meta <- readRDS("erie_data/erie_meta.rds")
-erie_tax <- readRDS("erie_data/erie_tax.rds")
+erie <- readRDS("data/erie.rds")
+erie_meta <- readRDS("data/erie_meta.rds")
+erie_tax <- readRDS("data/erie_tax.rds")
 ```
 
 ### Remove Small Samples

@@ -1,0 +1,102 @@
+---
+title: "Visualizing Characters in The Silmarillion"
+date: 2023-08-01
+author: Haniah Kring 
+categories: [NLP, networks, j.r.r. tolkien]
+code-fold: true
+format: 
+  html: 
+    page-layout: full
+---
+
+```{r}
+#| label: Setup
+#| include: false
+source(here::here("..", "Silmarillion-Character-Analysis", "R", "000-Packages.R"))
+
+file.copy(here::here("..", "Silmarillion-Character-Analysis", "data", "Silmarillion Characters.csv"), here::here("data"))
+file.copy(here::here("..", "Silmarillion-Character-Analysis", "data", "Silmarillion.txt"), here::here("data"))
+
+source(here::here("..", "Silmarillion-Character-Analysis", "R", "001-Load-Data.R"))
+
+file.remove(here::here("data", "Silmarillion Characters.csv"))
+file.remove(here::here("data", "Silmarillion.txt"))
+
+source(here::here("..", "Silmarillion-Character-Analysis", "R", "002-Character-Wordcloud.R"))
+source(here::here("..", "Silmarillion-Character-Analysis", "R", "003-Character-Network.R"))
+```
+
+## Word Clouds
+
+Word clouds are a way to visually represent text data and assign importance to each word. The word cloud below shows every character in J.R.R. Tolkien's *The Silmarillion* where the size of their name is determined by how often they are mentioned throughout the text.
+
+```{r}
+set.seed(1)
+wordcloud::wordcloud(
+  words = wordcloud_data$word,
+  freq = wordcloud_data$freq,
+  min.freq = 1,
+  max.words = 200,
+  random.order = FALSE,
+  rot.per = 0.35,
+  colors = RColorBrewer::brewer.pal(8, "Dark2")
+)
+```
+
+## Force Networks
+
+Force networks visualize connections between nodes and edges. More practically, nodes are people, places, things, or ideas, while edges are the associations between the aforementioned items. Here, I show all the characters in the chapter "Beren and Luthien" and their relationships. Characters who are highly associated together are grouped by colour. Large nodes are main characters in the chapter, while small nodes are minor characters or mentions.
+
+```{r}
+forceNetwork(
+  Links = links,
+  Nodes = nodes,
+  Source = "IDsource",
+  Target = "IDtarget",
+  Value = "value",
+  NodeID = "name",
+  Group = "group",
+  fontSize = 18,
+  Nodesize = "size",
+  opacity = 1
+)
+```
+
+## Chord Diagrams
+
+Chord diagrams help represent flows between sets of entities. Similar to the force network above, the diagram below shows characters and their relationships.
+
+```{r, max.height = '100px' }
+#| fig-asp: 1
+
+# Chord Network
+Adj_Matrix <- get.adjacency(graph.data.frame(df |> select(V1, V2)), sparse=FALSE) # This method produces n by n matrices
+networkD3::chordNetwork(
+  Adj_Matrix,
+  labels = rownames(Adj_Matrix),
+  height = 600,
+  width = 750
+)
+```
+
+## Dendrograms
+
+Dendrograms can be used in two ways -
+
+1.  To show hierarchies (e.g. a team's corporate hierarchy)
+2.  To show similarities between items in a group (e.g. similiarities between plant species based on select characteristics)
+
+Here, I am using a dendrogram to show "closeness" between the characters.
+
+```{r}
+# This method produces m by n matrices
+Adj_Matrix2 <- table(df |> select(V1, V2))
+hc <- hclust(dist(Adj_Matrix2), method = "complete")
+
+networkD3::dendroNetwork(
+  hc,
+  height = 1250,
+  fontSize = 14,
+  nodeStroke = "midnightblue"
+)
+```
