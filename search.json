@@ -39,35 +39,35 @@
     "href": "silmarillion-characters.html",
     "title": "Visualizing Characters in The Silmarillion",
     "section": "",
-    "text": "Word clouds are a way to visually represent text data and assign importance to each word. The word cloud below shows every character in J.R.R. Tolkien’s The Silmarillion where the size of their name is determined by how often they are mentioned throughout the text.\n\n\nCode\nset.seed(1)\nwordcloud::wordcloud(\n  words = wordcloud_data$word,\n  freq = wordcloud_data$freq,\n  min.freq = 1,\n  max.words = 200,\n  random.order = FALSE,\n  rot.per = 0.35,\n  colors = RColorBrewer::brewer.pal(8, \"Dark2\")\n)"
+    "text": "This project documents the visualizations I made for use in my Silmarillion Character Shiny Dashboard, which you can find here."
   },
   {
     "objectID": "silmarillion-characters.html#word-clouds",
     "href": "silmarillion-characters.html#word-clouds",
     "title": "Visualizing Characters in The Silmarillion",
-    "section": "",
-    "text": "Word clouds are a way to visually represent text data and assign importance to each word. The word cloud below shows every character in J.R.R. Tolkien’s The Silmarillion where the size of their name is determined by how often they are mentioned throughout the text.\n\n\nCode\nset.seed(1)\nwordcloud::wordcloud(\n  words = wordcloud_data$word,\n  freq = wordcloud_data$freq,\n  min.freq = 1,\n  max.words = 200,\n  random.order = FALSE,\n  rot.per = 0.35,\n  colors = RColorBrewer::brewer.pal(8, \"Dark2\")\n)"
+    "section": "Word Clouds",
+    "text": "Word Clouds\nWord clouds are a way to visually represent text data and assign importance to each word. The word cloud below shows every character in J.R.R. Tolkien’s The Silmarillion where the size of their name is determined by how often they are mentioned throughout the text.\n\n\nCode\nset.seed(1)\nwordcloud::wordcloud(\n  words = wordcloud_data$word,\n  freq = wordcloud_data$freq,\n  min.freq = 1,\n  max.words = 200,\n  random.order = FALSE,\n  rot.per = 0.35,\n  colors = RColorBrewer::brewer.pal(8, \"Dark2\")\n)"
   },
   {
     "objectID": "silmarillion-characters.html#force-networks",
     "href": "silmarillion-characters.html#force-networks",
     "title": "Visualizing Characters in The Silmarillion",
     "section": "Force Networks",
-    "text": "Force Networks\nForce networks visualize connections between nodes and edges. More practically, nodes are people, places, things, or ideas, while edges are the associations between the aforementioned items. Here, I show all the characters in the chapter “Beren and Luthien” and their relationships. Characters who are highly associated together are grouped by colour. Large nodes are main characters in the chapter, while small nodes are minor characters or mentions.\n\n\nCode\nforceNetwork(\n  Links = links,\n  Nodes = nodes,\n  Source = \"IDsource\",\n  Target = \"IDtarget\",\n  Value = \"value\",\n  NodeID = \"name\",\n  Group = \"group\",\n  fontSize = 18,\n  Nodesize = \"size\",\n  opacity = 1\n)"
+    "text": "Force Networks\nForce networks visualize connections between nodes and edges. More practically, nodes are people, places, things, or ideas, while edges are the associations between the aforementioned items. Here, I show all the characters in the chapter “Beren and Luthien” and their relationships. Characters who are highly associated together are grouped by colour. Large nodes are main characters in the chapter, while small nodes are minor characters or mentions.\n\n\nCode\nforceNetwork(\n  Links = data$Links,\n  Nodes = data$Nodes,\n  Source = \"source_id\",\n  Target = \"target_id\",\n  Value = \"value\",\n  NodeID = \"name\",\n  Nodesize = \"size\",\n  Group = \"group\",\n  fontSize = 18,\n  opacity = 1\n)"
   },
   {
     "objectID": "silmarillion-characters.html#chord-diagrams",
     "href": "silmarillion-characters.html#chord-diagrams",
     "title": "Visualizing Characters in The Silmarillion",
     "section": "Chord Diagrams",
-    "text": "Chord Diagrams\nChord diagrams help represent flows between sets of entities. Similar to the force network above, the diagram below shows characters and their relationships.\n\n\nCode\n# Chord Network\nAdj_Matrix &lt;- get.adjacency(graph.data.frame(df |&gt; select(V1, V2)), sparse=FALSE) # This method produces n by n matrices\nnetworkD3::chordNetwork(\n  Adj_Matrix,\n  labels = rownames(Adj_Matrix),\n  height = 600,\n  width = 750\n)"
+    "text": "Chord Diagrams\nChord diagrams help represent flows between sets of entities. Similar to the force network above, the diagram below shows characters and their relationships.\n\n\nCode\n# Chord Network\nAdj_Matrix &lt;- get.adjacency(graph.data.frame(data$Raw.Links), sparse=FALSE) # This method produces n by n matrices\nnetworkD3::chordNetwork(\n  Adj_Matrix,\n  labels = rownames(Adj_Matrix)\n)"
   },
   {
     "objectID": "silmarillion-characters.html#dendrograms",
     "href": "silmarillion-characters.html#dendrograms",
     "title": "Visualizing Characters in The Silmarillion",
     "section": "Dendrograms",
-    "text": "Dendrograms\nDendrograms can be used in two ways -\n\nTo show hierarchies (e.g. a team’s corporate hierarchy)\nTo show similarities between items in a group (e.g. similiarities between plant species based on select characteristics)\n\nHere, I am using a dendrogram to show “closeness” between the characters.\n\n\nCode\n# This method produces m by n matrices\nAdj_Matrix2 &lt;- table(df |&gt; select(V1, V2))\nhc &lt;- hclust(dist(Adj_Matrix2), method = \"complete\")\n\nnetworkD3::dendroNetwork(\n  hc,\n  height = 1250,\n  fontSize = 14,\n  nodeStroke = \"midnightblue\"\n)"
+    "text": "Dendrograms\nDendrograms can be used in two ways -\n\nTo show hierarchies (e.g. a team’s corporate hierarchy)\nTo show similarities between items in a group (e.g. similiarities between plant species based on select characteristics)\n\nHere, I am using a dendrogram to show “closeness” between the characters.\n\n\nCode\n# This method produces m by n matrices\nAdj_Matrix2 &lt;- table(data$Raw.Links)\nhc &lt;- hclust(dist(Adj_Matrix2), method = \"complete\")\n\nnetworkD3::dendroNetwork(\n  hc,\n  height = 1250,\n  fontSize = 14,\n  nodeStroke = \"midnightblue\"\n)"
   },
   {
     "objectID": "erie.html",
