@@ -1,6 +1,6 @@
 ---
 title: "Visualizing Characters in The Silmarillion"
-date: 2023-08-01
+date: 2023-08-02
 author: Haniah Kring 
 categories: [NLP, networks, j.r.r. tolkien]
 code-fold: true
@@ -17,14 +17,19 @@ source(here::here("..", "Silmarillion-Character-Analysis", "R", "000-Packages.R"
 file.copy(here::here("..", "Silmarillion-Character-Analysis", "data", "Silmarillion Characters.csv"), here::here("data"))
 file.copy(here::here("..", "Silmarillion-Character-Analysis", "data", "Silmarillion.txt"), here::here("data"))
 
-source(here::here("..", "Silmarillion-Character-Analysis", "R", "001-Load-Data.R"))
+source(here::here("..", "Silmarillion-Character-Analysis", "R", "002-Load-Data.R"))
 
 file.remove(here::here("data", "Silmarillion Characters.csv"))
 file.remove(here::here("data", "Silmarillion.txt"))
 
-source(here::here("..", "Silmarillion-Character-Analysis", "R", "002-Character-Wordcloud.R"))
-source(here::here("..", "Silmarillion-Character-Analysis", "R", "003-Character-Network.R"))
+source(here::here("..", "Silmarillion-Character-Analysis", "R", "006-Character-Extraction-Functions.R"))
+source(here::here("..", "Silmarillion-Character-Analysis", "R", "003-Character-Wordcloud.R"))
+source(here::here("..", "Silmarillion-Character-Analysis", "R", "004-Character-Networks.R"))
 ```
+
+This project documents the visualizations I made for use in my Silmarillion Character Shiny Dashboard, which you can find [here](https://hrkring.shinyapps.io/Silmarillion-Characters-Dashboard/).
+
+# Natural Language Processing
 
 ## Word Clouds
 
@@ -43,21 +48,23 @@ wordcloud::wordcloud(
 )
 ```
 
+# Network Analysis
+
 ## Force Networks
 
 Force networks visualize connections between nodes and edges. More practically, nodes are people, places, things, or ideas, while edges are the associations between the aforementioned items. Here, I show all the characters in the chapter "Beren and Luthien" and their relationships. Characters who are highly associated together are grouped by colour. Large nodes are main characters in the chapter, while small nodes are minor characters or mentions.
 
 ```{r}
 forceNetwork(
-  Links = links,
-  Nodes = nodes,
-  Source = "IDsource",
-  Target = "IDtarget",
+  Links = data$Links,
+  Nodes = data$Nodes,
+  Source = "source_id",
+  Target = "target_id",
   Value = "value",
   NodeID = "name",
+  Nodesize = "size",
   Group = "group",
   fontSize = 18,
-  Nodesize = "size",
   opacity = 1
 )
 ```
@@ -70,12 +77,10 @@ Chord diagrams help represent flows between sets of entities. Similar to the for
 #| fig-asp: 1
 
 # Chord Network
-Adj_Matrix <- get.adjacency(graph.data.frame(df |> select(V1, V2)), sparse=FALSE) # This method produces n by n matrices
+Adj_Matrix <- get.adjacency(graph.data.frame(data$Raw.Links), sparse=FALSE) # This method produces n by n matrices
 networkD3::chordNetwork(
   Adj_Matrix,
-  labels = rownames(Adj_Matrix),
-  height = 600,
-  width = 750
+  labels = rownames(Adj_Matrix)
 )
 ```
 
@@ -90,7 +95,7 @@ Here, I am using a dendrogram to show "closeness" between the characters.
 
 ```{r}
 # This method produces m by n matrices
-Adj_Matrix2 <- table(df |> select(V1, V2))
+Adj_Matrix2 <- table(data$Raw.Links)
 hc <- hclust(dist(Adj_Matrix2), method = "complete")
 
 networkD3::dendroNetwork(
