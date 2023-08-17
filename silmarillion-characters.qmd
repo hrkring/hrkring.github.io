@@ -14,8 +14,8 @@ format:
 #| include: false
 source(here::here("..", "Silmarillion-Character-Analysis", "R", "000-Packages.R"))
 
-file.copy(here::here("..", "Silmarillion-Character-Analysis", "data", "Silmarillion Characters.csv"), here::here("data"))
-file.copy(here::here("..", "Silmarillion-Character-Analysis", "data", "Silmarillion.txt"), here::here("data"))
+file.copy(here::here("..", "Silmarillion-Character-Analysis", "data", "Silmarillion", "Silmarillion Characters.csv"), here::here("data"))
+file.copy(here::here("..", "Silmarillion-Character-Analysis", "data", "Silmarillion", "Silmarillion.txt"), here::here("data"))
 
 source(here::here("..", "Silmarillion-Character-Analysis", "R", "002-Load-Data.R"))
 

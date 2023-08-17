@@ -1,0 +1,91 @@
+---
+title: "Credit Classification"
+date: 2023-08-13
+author: Haniah Kring 
+categories: [tidymodels, classification]
+code-fold: true
+format: 
+  html: 
+    page-layout: full
+---
+
+# Load Data
+
+```{r}
+library(tidymodels)
+#library(vip)
+
+Credit_Data <- readr::read_csv(here::here("data", "german_credit_data.csv"))
+
+```
+
+# Preprocessing
+
+```{r}
+
+x <- Credit_Data |>
+  mutate(across(c(Housing, Sex, Purpose), ~ factor(.x, levels = sort(unique(.x)))))
+
+Credit_Data_Clean <- Credit_Data |>
+  mutate(
+    Job = as.character(Job),
+    Job = case_when(
+      Job == "1" ~ "unskilled, non-resident",
+      Job == "2" ~ "unskilled, resident",
+      Job == "3" ~ "skilled",
+      Job == "4" ~ "highly skilled",
+      .default = "other"
+    ),
+    across(where(is.character), ~ as.factor(.x))) |>
+  select(-1)
+
+Credit_Splits <- initial_split(Credit_Data_Clean, prop = .8)
+
+Credit_Train <- training(Credit_Splits)
+Credit_Test <- testing(Credit_Splits)
+Credit_Val <- validation_split(Credit_Train, prop = .8)
+
+```
+
+# Building the Model
+
+```{r}
+
+Credit_Model <- linear_reg(penalty = tune(), mixture = 1) |>
+  set_engine("glmnet")
+
+Credit_Recipe <- recipe(`Credit amount` ~ ., data = Credit_Data_Clean) |>
+  step_impute_knn(all_predictors()) |>
+  step_dummy(all_nominal_predictors()) |>
+  step_normalize(all_predictors())
+
+Credit_Workflow <- workflow() |>
+  add_model(Credit_Model) |>
+  add_recipe(Credit_Recipe)
+
+Model_Grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
+
+
+
+```
+
+
+```{r}
+
+Model_Result <- Credit_Workflow |>
+  tune_grid(
+    Credit_Val,
+    grid = Model_Grid,
+    control = control_grid(save_pred = TRUE),
+    metrics = metric_set(rsq)
+  )
+
+Model_Result |>
+  show_best("rsq", n = 5) |>
+  arrange(penalty)
+
+Model_Compare <- Model_Result|>
+  collect_metrics() |>
+  best
+
+```
